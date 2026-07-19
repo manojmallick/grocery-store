@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-server
+client/dist
+.env
+.env.local
+*.log
+.context
+gain-report.json
+tsconfig.tsbuildinfo
+
+# blog content lives here — commit it or mount it as a volume, your choice
+/data/
+benchmarks/reports
