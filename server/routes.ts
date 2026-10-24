@@ -10,6 +10,7 @@ import {
 import { getDb, localized, makeExcerpt, newId, slugify, withDb, type Page, type Post, type Translation } from "./store.js";
 
 export const api = Router();
+const SECURE_COOKIE = process.env.NODE_ENV === "production" ? "; Secure" : "";
 
 /* ---------- public ---------- */
 
@@ -70,13 +71,13 @@ api.post("/auth/login", (req, res) => {
   const token = createSessionToken();
   res.setHeader(
     "Set-Cookie",
-    `${COOKIE_NAME}=${encodeURIComponent(token)}; HttpOnly; Path=/; Max-Age=${7 * 24 * 3600}; SameSite=Lax`,
+    `${COOKIE_NAME}=${encodeURIComponent(token)}; HttpOnly; Path=/; Max-Age=${7 * 24 * 3600}; SameSite=Lax${SECURE_COOKIE}`,
   );
   res.json({ ok: true });
 });
 
 api.post("/auth/logout", (_req, res) => {
-  res.setHeader("Set-Cookie", `${COOKIE_NAME}=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax`);
+  res.setHeader("Set-Cookie", `${COOKIE_NAME}=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${SECURE_COOKIE}`);
   res.json({ ok: true });
 });
 

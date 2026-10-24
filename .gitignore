@@ -4,6 +4,7 @@ dist-server
 client/dist
 .env
 .env.local
+.DS_Store
 *.log
 .context
 gain-report.json

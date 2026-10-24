@@ -12,10 +12,9 @@ pnpm dev        # Express API on :4000, React client on :5173 (proxies /api)
 
 Open http://localhost:5173 — the public blog. Admin lives at **/admin**.
 
-> **Security:** the default `admin` password is for local development only. Before any
-> network-accessible deployment, set a strong `ADMIN_PASSWORD` and a long, random
-> `SESSION_SECRET`. Keep both out of source control and verify the deployed environment
-> has them configured.
+> **Security:** the default `admin` password and generated session key are for local
+> development only. Production startup refuses to run unless both `ADMIN_PASSWORD` and
+> `SESSION_SECRET` are set. Keep them out of source control and serve the admin over HTTPS.
 
 ## Admin flow
 
@@ -38,3 +37,11 @@ pnpm build && pnpm start   # serves client + API on :4000
 
 Or use the Dockerfile (`deploy-docker.yml` workflow is pre-wired) — mount a volume at
 `/app/data` to persist content.
+
+The Docker image workflow runs only when manually dispatched. This is a single-admin
+prototype: it has no login throttling and stores content in a local JSON file. Restrict
+network access to `/admin` and review the code before exposing an instance publicly.
+
+## License
+
+The original project code is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Third-party dependencies retain their own licenses.

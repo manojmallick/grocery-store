@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "grocery-store",
+  "description": "A self-hosted blog CMS prototype with a React admin and Express API.",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "concurrently -n server,client -c blue,green \"tsx watch server/index.ts\" \"vite\"",
     "build": "vite build && tsc -p tsconfig.server.json",

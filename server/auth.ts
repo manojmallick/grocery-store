@@ -1,9 +1,16 @@
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import type { NextFunction, Request, Response } from "express";
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "admin";
-// Sessions survive restarts only when SESSION_SECRET is set — fine for a single admin.
-const SECRET = process.env.SESSION_SECRET ?? randomBytes(32).toString("hex");
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? (IS_PRODUCTION ? "" : "admin");
+const SESSION_SECRET = process.env.SESSION_SECRET ?? "";
+const SECRET = SESSION_SECRET || (IS_PRODUCTION ? "" : randomBytes(32).toString("hex"));
+if (IS_PRODUCTION && Buffer.byteLength(ADMIN_PASSWORD) < 12) {
+  throw new Error("ADMIN_PASSWORD must contain at least 12 bytes in production");
+}
+if (IS_PRODUCTION && Buffer.byteLength(SESSION_SECRET) < 32) {
+  throw new Error("SESSION_SECRET must contain at least 32 bytes in production");
+}
 const SESSION_TTL_MS = 7 * 24 * 3600 * 1000;
 export const COOKIE_NAME = "blog_session";
 
