@@ -10,9 +10,12 @@ pnpm install
 pnpm dev        # Express API on :4000, React client on :5173 (proxies /api)
 ```
 
-Open http://localhost:5173 — the public blog. Admin lives at **/admin**
-(default password `admin`; set `ADMIN_PASSWORD` to change it, `SESSION_SECRET` to keep
-logins across restarts).
+Open http://localhost:5173 — the public blog. Admin lives at **/admin**.
+
+> **Security:** the default `admin` password is for local development only. Before any
+> network-accessible deployment, set a strong `ADMIN_PASSWORD` and a long, random
+> `SESSION_SECRET`. Keep both out of source control and verify the deployed environment
+> has them configured.
 
 ## Admin flow
 
